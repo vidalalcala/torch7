@@ -88,18 +88,18 @@ types.Tensor = {
                  return table.concat(txt, '\n')
               end
 }
-types.Generator = {
+types.Random = {
 
    helpname = function(arg)
-                 return "Generator"
+                 return "Random"
               end,
 
    declare = function(arg)
-                return string.format("THGenerator *arg%d = NULL;", arg.i)
+                return string.format("THRandom *arg%d = NULL;", arg.i)
              end,
 
    check = function(arg, idx)
-              return string.format("(arg%d = luaT_toudata(L, %d, torch_Generator))", arg.i, idx)
+              return string.format("(arg%d = luaT_toudata(L, %d, torch_Random))", arg.i, idx)
            end,
 
    read = function(arg, idx)
@@ -107,9 +107,9 @@ types.Generator = {
 
    init = function(arg)
              local text = {}
-             -- If no generator is supplied, pull the default out of the torch namespace.
+             -- If no Random is supplied, pull the default out of the torch namespace.
              table.insert(text, 'lua_getglobal(L,"torch");')
-             table.insert(text, string.format('arg%d = luaT_getfieldcheckudata(L, -1, "_gen", torch_Generator);', arg.i))
+             table.insert(text, string.format('arg%d = luaT_getfieldcheckudata(L, -1, "_gen", torch_Random);', arg.i))
              table.insert(text, 'lua_pop(L, 2);')
              return table.concat(text, '\n')
           end,

@@ -9,31 +9,31 @@ interface:print(
 #include "luaT.h"
 #include "TH.h"
 
-extern void torch_Generator_init(lua_State *L);
-extern void torch_Generator_new(lua_State *L);
+extern void torch_Random_init(lua_State *L);
+extern void torch_Random_new(lua_State *L);
    ]])
 
 for _,name in ipairs({"seed", "initialSeed"}) do
    interface:wrap(name,
                   string.format("THRandom_%s",name),
-                  {{name='Generator', default=true},
+                  {{name='Random', default=true},
                    {name="long", creturned=true}})
 end
 
 interface:wrap('manualSeed',
                'THRandom_manualSeed',
-               {{name='Generator', default=true},
+               {{name='Random', default=true},
                 {name="long"}})
 
 interface:wrap('getRNGState',
                 'THByteTensor_getRNGState',
-                {{name='Generator', default=true},
+                {{name='Random', default=true},
                  {name='ByteTensor',default=true,returned=true,method={default='nil'}}
                  })
 
 interface:wrap('setRNGState',
                 'THByteTensor_setRNGState',
-                {{name='Generator', default=true},
+                {{name='Random', default=true},
                  {name='ByteTensor',default=true,returned=true,method={default='nil'}}
                  })
 
@@ -43,8 +43,8 @@ interface:print(
    [[
 void torch_random_init(lua_State *L)
 {
-  torch_Generator_init(L);
-  torch_Generator_new(L);
+  torch_Random_init(L);
+  torch_Random_new(L);
   lua_setfield(L, -2, "_gen");
   luaL_register(L, NULL, random__);
 }
