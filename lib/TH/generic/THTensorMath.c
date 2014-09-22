@@ -2,7 +2,7 @@
 #define TH_GENERIC_FILE "generic/THTensorMath.c"
 #else
 
-#define TH_OMP_OVERHEAD_THRESHOLD 100000
+#define TH_OMP_OVERHEAD_THRESHOLD 10000
 
 void THTensor_(fill)(THTensor *r_, real value)
 {
